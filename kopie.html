@@ -1,0 +1,604 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PlayZone Arcade | Games</title>
+
+<style>
+:root {
+  --bg: #0b0b17;
+  --panel: #17172b;
+  --purple: #8b5cf6;
+  --pink: #ec4899;
+  --text: #f8f7ff;
+  --muted: #aaa8c4;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+header {
+  padding: 18px 7%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
+  background: #111122;
+  border-bottom: 1px solid #292642;
+}
+.logo { font-size: 25px; font-weight: bold; color: #c4b5fd; }
+nav { display: flex; gap: 18px; flex-wrap: wrap; }
+a { color: inherit; text-decoration: none; }
+nav a:hover { color: #c4b5fd; }
+.hero {
+  text-align: center;
+  padding: 55px 20px 30px;
+  background: radial-gradient(ellipse at top, #39216a, #0b0b17 70%);
+}
+.hero h1 { font-size: clamp(32px, 6vw, 52px); margin: 0 0 12px; }
+.hero h1 span { color: #c4b5fd; }
+.hero p { color: var(--muted); line-height: 1.6; }
+.controls {
+  max-width: 1050px;
+  margin: 20px auto 30px;
+  padding: 0 20px;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+input, select {
+  padding: 13px;
+  border-radius: 10px;
+  border: 1px solid #393552;
+  background: var(--panel);
+  color: white;
+  font-size: 15px;
+}
+#search { flex: 1; min-width: 190px; }
+.games {
+  max-width: 1200px;
+  margin: auto;
+  padding: 0 20px 55px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 18px;
+}
+.game-card {
+  background: var(--panel);
+  border: 1px solid #292642;
+  border-radius: 16px;
+  padding: 20px;
+  transition: transform .2s, border-color .2s;
+}
+.game-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--purple);
+}
+.emoji { font-size: 42px; margin-bottom: 12px; }
+.game-card h3 { margin: 0 0 9px; }
+.game-card p { color: var(--muted); min-height: 38px; font-size: 14px; }
+.tag { font-size: 12px; color: #c4b5fd; }
+button {
+  background: linear-gradient(100deg, var(--purple), var(--pink));
+  color: white;
+  border: 0;
+  border-radius: 9px;
+  padding: 11px 15px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+}
+button:hover { filter: brightness(1.13); }
+.game-card button { width: 100%; margin-top: 12px; }
+footer {
+  text-align: center;
+  color: var(--muted);
+  padding: 25px;
+  border-top: 1px solid #292642;
+}
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  background: #05050deF;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+}
+.modal.open { display: flex; }
+.modal-box {
+  width: min(600px, 100%);
+  max-height: 90vh;
+  overflow: auto;
+  background: #17172b;
+  border: 1px solid #55427e;
+  border-radius: 18px;
+  padding: 22px;
+}
+.modal-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+.modal-top h2 { margin: 0; }
+.close { background: #302b46; }
+#gameArea { text-align: center; padding: 20px 0 8px; }
+#gameArea p { color: var(--muted); }
+.play-btn {
+  margin: 5px;
+  min-width: 54px;
+  min-height: 43px;
+}
+.big-number { font-size: 38px; font-weight: bold; margin: 15px; }
+.tiles {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(45px, 1fr));
+  gap: 8px;
+  max-width: 360px;
+  margin: 15px auto;
+}
+.tile {
+  min-height: 58px;
+  font-size: 23px;
+  background: #30284c;
+}
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  max-width: 300px;
+  margin: 18px auto;
+}
+.cell {
+  aspect-ratio: 1;
+  font-size: 30px;
+  background: #30284c;
+}
+#feedback { min-height: 26px; font-weight: bold; color: #c4b5fd; }
+@media (max-width: 500px) {
+  header { padding: 16px; }
+  nav { gap: 12px; }
+  .games { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; padding: 0 10px 35px; }
+  .game-card { padding: 13px; }
+  .emoji { font-size: 32px; }
+  .game-card h3 { font-size: 16px; }
+  .game-card p { font-size: 12px; }
+  .game-card button { padding: 10px 5px; }
+}
+</style>
+</head>
+
+<body>
+<header>
+  <a class="logo" href="index.html">🎮 PlayZone</a>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="games.html">Games</a>
+    <a href="kop.html">Apps</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <h1>Welcome to <span>Game Zone</span></h1>
+  <p>20 mini-games. No downloads. Just open a game and play!</p>
+</section>
+
+<div class="controls">
+  <input id="search" type="search" placeholder="🔍 Search games..." aria-label="Search games">
+  <select id="category" aria-label="Filter games">
+    <option value="all">All games</option>
+    <option value="puzzle">Puzzle</option>
+    <option value="action">Action</option>
+    <option value="brain">Brain games</option>
+    <option value="casual">Casual</option>
+  </select>
+</div>
+
+<main class="games" id="games"></main>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="gameTitle">
+  <div class="modal-box">
+    <div class="modal-top">
+      <h2 id="gameTitle">Game</h2>
+      <button class="close" id="closeBtn">✕ Close</button>
+    </div>
+    <div id="gameArea"></div>
+    <div id="feedback" aria-live="polite"></div>
+    <button id="restartBtn">↻ Restart game</button>
+  </div>
+</div>
+
+<footer>© 2026 PlayZone Arcade | Made for fun 🎮</footer>
+
+<script>
+const gameList = [
+  ["ttt","⭕","Tic-Tac-Toe","Beat a friend in the classic grid.","puzzle"],
+  ["rps","✊","Rock Paper Scissors","Play against the computer.","casual"],
+  ["guess","🔢","Number Guess","Find the secret number.","brain"],
+  ["math","🧮","Math Challenge","Solve quick maths questions.","brain"],
+  ["memory","🧠","Memory Match","Find all matching pairs.","puzzle"],
+  ["reaction","⚡","Reaction Test","Test how fast you react.","action"],
+  ["click","🖱️","Click Challenge","Click as many times as you can.","action"],
+  ["typing","⌨️","Typing Challenge","Type the displayed word.","brain"],
+  ["scramble","🔤","Word Scramble","Unscramble a hidden word.","puzzle"],
+  ["color","🎨","Color Match","Choose the named color.","brain"],
+  ["simon","🟣","Simon Sequence","Remember the growing sequence.","brain"],
+  ["higher","📈","Higher or Lower","Guess whether the next number is higher.","casual"],
+  ["coin","🪙","Coin Flip","Call heads or tails.","casual"],
+  ["dice","🎲","Dice Duel","Roll against the computer.","casual"],
+  ["mole","🐹","Whack-a-Mole","Catch the moving target.","action"],
+  ["trivia","🌍","Trivia Quiz","Answer general knowledge questions.","brain"],
+  ["odd","🔍","Odd One Out","Spot the item that is different.","puzzle"],
+  ["sequence","🔢","Sequence Puzzle","Find the next number.","brain"],
+  ["count","🍎","Quick Counting","Count the objects correctly.","brain"],
+  ["target","🎯","Target Tap","Tap the target as it moves.","action"]
+];
+
+const $ = id => document.getElementById(id);
+let current = "";
+let state = {};
+let timer = null;
+let startedAt = 0;
+
+function renderCards() {
+  const q = $("search").value.toLowerCase();
+  const cat = $("category").value;
+  $("games").innerHTML = "";
+  const filtered = gameList.filter(g =>
+    (cat === "all" || g[4] === cat) &&
+    (g[2] + " " + g[3]).toLowerCase().includes(q)
+  );
+  filtered.forEach(g => {
+    const card = document.createElement("article");
+    card.className = "game-card";
+    const emoji = document.createElement("div");
+    emoji.className = "emoji";
+    emoji.textContent = g[1];
+    const title = document.createElement("h3");
+    title.textContent = g[2];
+    const desc = document.createElement("p");
+    desc.textContent = g[3];
+    const tag = document.createElement("span");
+    tag.className = "tag";
+    tag.textContent = g[4].toUpperCase();
+    const btn = document.createElement("button");
+    btn.textContent = "▶ Play Now";
+    btn.addEventListener("click", () => openGame(g[0]));
+    card.append(emoji, title, desc, tag, btn);
+    $("games").appendChild(card);
+  });
+  if (!filtered.length) $("games").textContent = "No games found. Try another search.";
+}
+$("search").addEventListener("input", renderCards);
+$("category").addEventListener("change", renderCards);
+
+function feedback(msg) { $("feedback").textContent = msg; }
+function area(html) { $("gameArea").innerHTML = html; }
+function buttons(items) {
+  return items.map(x => `<button class="play-btn" data-action="${x[0]}">${x[1]}</button>`).join("");
+}
+function rand(n) { return Math.floor(Math.random() * n); }
+function shuffle(a) {
+  return a.slice().sort(() => Math.random() - 0.5);
+}
+function stopTimer() { if (timer) clearInterval(timer); timer = null; }
+function openGame(id) {
+  stopTimer();
+  current = id;
+  state = {};
+  const g = gameList.find(x => x[0] === id);
+  $("gameTitle").textContent = g[1] + " " + g[2];
+  $("modal").classList.add("open");
+  feedback("");
+  startGame();
+}
+function closeGame() {
+  stopTimer();
+  $("modal").classList.remove("open");
+}
+$("closeBtn").addEventListener("click", closeGame);
+$("modal").addEventListener("click", e => {
+  if (e.target === $("modal")) closeGame();
+});
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape") closeGame();
+});
+$("restartBtn").addEventListener("click", () => {
+  stopTimer(); state = {}; feedback(""); startGame();
+});
+
+function startGame() {
+  stopTimer();
+  feedback("");
+  switch (current) {
+    case "ttt": startTTT(); break;
+    case "rps":
+      area(`<p>Choose your move.</p>${buttons([["rock","✊ Rock"],["paper","✋ Paper"],["scissors","✌️ Scissors"]])}<p id="result"></p>`);
+      break;
+    case "guess":
+      state.secret = rand(100) + 1; state.tries = 0;
+      area(`<p>Guess a number from 1 to 100.</p><input id="answer" type="number" min="1" max="100" placeholder="Your guess"><button data-action="guess">Guess</button><p id="result"></p><p>Attempts: <span id="tries">0</span></p>`);
+      break;
+    case "math": startMath(); break;
+    case "memory": startMemory(); break;
+    case "reaction": startReaction(); break;
+    case "click": startClick(); break;
+    case "typing": startTyping(); break;
+    case "scramble": startScramble(); break;
+    case "color": startColor(); break;
+    case "simon": startSimon(); break;
+    case "higher": startHigher(); break;
+    case "coin":
+      area(`<p>Predict the result.</p>${buttons([["heads","Heads"],["tails","Tails"]])}<p id="result"></p>`);
+      break;
+    case "dice":
+      area(`<p>Roll a die. Highest roll wins!</p><button data-action="roll">🎲 Roll dice</button><p id="result"></p>`);
+      break;
+    case "mole": startMole(); break;
+    case "trivia": startTrivia(); break;
+    case "odd": startOdd(); break;
+    case "sequence": startSequence(); break;
+    case "count": startCount(); break;
+    case "target": startTarget(); break;
+  }
+}
+
+function startTTT() {
+  state.board = Array(9).fill("");
+  state.turn = "X"; state.done = false;
+  area(`<p>You are X. Take turns with a friend.</p><div class="board">${state.board.map((_,i)=>`<button class="cell" data-action="cell" data-index="${i}"></button>`).join("")}</div><p id="result">X's turn</p>`);
+}
+function tttCheck() {
+  const b = state.board;
+  const lines = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+  for (const l of lines) if (b[l[0]] && b[l[0]] === b[l[1]] && b[l[1]] === b[l[2]]) return b[l[0]] + " wins!";
+  return b.every(Boolean) ? "It's a draw!" : "";
+}
+function startMath() {
+  state.a = rand(20)+1; state.b = rand(20)+1;
+  state.op = ["+","−","×"][rand(3)];
+  state.answer = state.op === "+" ? state.a+state.b : state.op === "−" ? state.a-state.b : state.a*state.b;
+  area(`<p>Solve this:</p><div class="big-number">${state.a} ${state.op} ${state.b} = ?</div><input id="answer" type="number" placeholder="Your answer"><button data-action="mathcheck">Check</button><p id="result"></p>`);
+}
+const words = ["planet","garden","puzzle","rocket","orange","school","castle","window"];
+function startMemory() {
+  state.deck = shuffle(["🍎","🍎","🚀","🚀","🐱","🐱","⭐","⭐","⚽","⚽","🌈","🌈","🎲","🎲","🍀","🍀"]);
+  state.open = []; state.matched = new Set(); state.lock = false;
+  area(`<p>Find all 8 matching pairs.</p><div class="tiles">${state.deck.map((_,i)=>`<button class="tile" data-action="memory" data-index="${i}">❔</button>`).join("")}</div><p>Pairs: <span id="pairs">0</span>/8</p>`);
+}
+function startReaction() {
+  state.waiting = false; state.ready = false; state.start = 0;
+  area(`<p>Press the button when it turns green.</p><button class="play-btn" data-action="reactionstart">Start test</button><p id="result"></p>`);
+}
+function startClick() {
+  state.count = 0; state.left = 10; state.running = false;
+  area(`<p>Click as many times as possible in 10 seconds.</p><div class="big-number" id="count">0</div><p id="clock">10 seconds</p><button class="play-btn" data-action="clicker">Start / Click!</button>`);
+}
+function startTyping() {
+  state.word = words[rand(words.length)];
+  area(`<p>Type this word exactly:</p><div class="big-number">${state.word}</div><input id="answer" placeholder="Type here" autocomplete="off"><button data-action="typecheck">Check</button><p id="result"></p>`);
+  setTimeout(() => { if (current === "typing" && $("answer")) $("answer").focus(); }, 50);
+}
+function startScramble() {
+  state.word = words[rand(words.length)];
+  let s = shuffle(state.word.split(""));
+  if (s.join("") === state.word) s = shuffle(state.word.split(""));
+  state.scrambled = s.join("");
+  area(`<p>Unscramble this word:</p><div class="big-number">${state.scrambled.toUpperCase()}</div><input id="answer" placeholder="Your answer"><button data-action="scramblecheck">Check</button><p id="result"></p>`);
+}
+function startColor() {
+  const names = ["RED","BLUE","GREEN","ORANGE","PURPLE"];
+  const colors = ["#ff5555","#5599ff","#42d392","#ff9f43","#c084fc"];
+  state.correct = rand(names.length);
+  state.display = rand(names.length);
+  area(`<p>Tap the color named by the text, not the text's color.</p><div class="big-number" style="color:${colors[state.display]}">${names[state.correct]}</div>${names.map((n,i)=>`<button class="play-btn" data-action="color" data-index="${i}">${n}</button>`).join("")}`);
+  state.names = names;
+}
+function startSimon() {
+  state.sequence = Array.from({length:4},()=>rand(4));
+  area(`<p>Remember this sequence, then enter it.</p><div class="big-number">${state.sequence.map(n=>["🔴","🔵","🟢","🟡"][n]).join(" ")}</div><p>Enter the colors in order.</p>${buttons([["s0","🔴"],["s1","🔵"],["s2","🟢"],["s3","🟡"]])}<p id="entered">Your sequence: </p>`);
+  state.entered = [];
+}
+function startHigher() {
+  state.number = rand(10)+1; state.score = 0;
+  area(`<p>Current number:</p><div class="big-number" id="number">${state.number}</div><p>Will the next number be higher or lower?</p>${buttons([["higher","⬆ Higher"],["lower","⬇ Lower"]])}<p id="result">Score: 0</p>`);
+}
+function startMole() {
+  state.score = 0; state.seconds = 15; state.mole = rand(9);
+  area(`<p>Tap the mole! You have 15 seconds.</p><div class="board">${Array.from({length:9},(_,i)=>`<button class="cell" data-action="mole" data-index="${i}">${i===state.mole?"🐹":"·"}</button>`).join("")}</div><p>Score: <span id="molescore">0</span> | Time: <span id="moleclock">15</span></p><button data-action="moleStart">Start</button>`);
+}
+const questions = [
+  ["Which planet is known as the Red Planet?","Mars",["Venus","Mars","Jupiter"]],
+  ["How many sides has a triangle?","3",["3","4","5"]],
+  ["What is 5 × 6?","30",["11","30","56"]],
+  ["Which animal is known as the largest mammal?","Blue whale",["Elephant","Blue whale","Giraffe"]],
+  ["How many days are in a week?","7",["5","7","10"]],
+  ["What is the capital of Japan?","Tokyo",["Seoul","Tokyo","Beijing"]]
+];
+function startTrivia() {
+  state.q = shuffle(questions).slice(0,5); state.index = 0; state.score = 0;
+  showTrivia();
+}
+function showTrivia() {
+  const q = state.q[state.index];
+  if (!q) { area(`<div class="big-number">${state.score}/5</div><p>Quiz complete!</p>`); return; }
+  area(`<p>Question ${state.index+1} of 5</p><h3>${q[0]}</h3>${q[2].map(a=>`<button class="play-btn" data-action="trivia" data-answer="${a}">${a}</button>`).join("")}`);
+}
+function startOdd() {
+  const sets = [
+    ["🍎","🍎","🍎","🍌"],
+    ["🔵","🔵","🔴","🔵"],
+    ["🐶","🐶","🐱","🐶"],
+    ["⭐","🌙","⭐","⭐"]
+  ];
+  state.set = sets[rand(sets.length)];
+  state.odd = state.set.findIndex(x=>x!==state.set[0]);
+  if (state.odd < 0) state.odd = 2;
+  area(`<p>Tap the different item.</p>${state.set.map((x,i)=>`<button class="play-btn" style="font-size:28px" data-action="odd" data-index="${i}">${x}</button>`).join("")}`);
+}
+function startSequence() {
+  state.start = rand(10)+2;
+  state.step = rand(8)+2;
+  state.answer = state.start + state.step*3;
+  area(`<p>What number comes next?</p><div class="big-number">${state.start}, ${state.start+state.step}, ${state.start+state.step*2}, ?</div><input id="answer" type="number" placeholder="Next number"><button data-action="sequencecheck">Check</button><p id="result"></p>`);
+}
+function startCount() {
+  state.count = rand(15)+5;
+  area(`<p>How many apples do you see?</p><div style="font-size:25px;line-height:1.8">${"🍎".repeat(state.count)}</div><input id="answer" type="number" placeholder="Count them"><button data-action="countcheck">Check</button><p id="result"></p>`);
+}
+function startTarget() {
+  state.score = 0; state.seconds = 10; state.running = false;
+  area(`<p>Tap the target as it moves. You have 10 seconds.</p><div id="targetArea" style="height:170px;position:relative;background:#100f20;border-radius:12px"><button data-action="targethit" id="targetButton" style="position:absolute;left:40%;top:40%;border-radius:50%;font-size:25px">🎯</button></div><p>Score: <span id="targetScore">0</span> | Time: <span id="targetClock">10</span></p><button data-action="targetStart">Start</button>`);
+}
+
+$("gameArea").addEventListener("click", e => {
+  const b = e.target.closest("[data-action]");
+  if (!b) return;
+  const a = b.dataset.action;
+  const idx = Number(b.dataset.index);
+  if (a === "cell" && current === "ttt" && !state.done && !state.board[idx]) {
+    state.board[idx] = state.turn;
+    b.textContent = state.turn;
+    const result = tttCheck();
+    if (result) { state.done = true; $("result").textContent = result; }
+    else { state.turn = state.turn === "X" ? "O" : "X"; $("result").textContent = state.turn + "'s turn"; }
+  }
+  if (a === "rock" || a === "paper" || a === "scissors") {
+    const computer = ["rock","paper","scissors"][rand(3)];
+    const outcome = a === computer ? "Draw!" :
+      ((a==="rock"&&computer==="scissors")||(a==="paper"&&computer==="rock")||(a==="scissors"&&computer==="paper")) ? "You win!" : "Computer wins!";
+    $("result").textContent = `You: ${a} | Computer: ${computer} — ${outcome}`;
+  }
+  if (a === "guess") {
+    const n = Number($("answer").value); state.tries++;
+    $("tries").textContent = state.tries;
+    $("result").textContent = !n || n<1 || n>100 ? "Enter a number from 1 to 100." : n===state.secret ? "Correct! You found it!" : n<state.secret ? "Try a higher number!" : "Try a lower number!";
+  }
+  if (a === "mathcheck") $("result").textContent = Number($("answer").value) === state.answer ? "Correct! 🎉" : "Not quite. Try again!";
+  if (a === "memory" && !state.lock && !state.matched.has(idx) && !state.open.includes(idx)) {
+    b.textContent = state.deck[idx]; state.open.push(idx);
+    if (state.open.length === 2) {
+      state.lock = true;
+      const [x,y] = state.open;
+      if (state.deck[x] === state.deck[y]) {
+        state.matched.add(x); state.matched.add(y); state.open = []; state.lock = false;
+        $("pairs").textContent = state.matched.size/2;
+        if (state.matched.size === 16) feedback("You found every pair!");
+      } else {
+        setTimeout(() => {
+          if (current !== "memory") return;
+          [x,y].forEach(i => {
+            const tile = $("gameArea").querySelector(`[data-index="${i}"]`);
+            if (tile && !state.matched.has(i)) tile.textContent = "❔";
+          });
+          state.open = []; state.lock = false;
+        }, 650);
+      }
+    }
+  }
+  if (a === "reactionstart") {
+    feedback("Wait for green...");
+    b.disabled = true;
+    state.waiting = true;
+    timer = setTimeout(() => {
+      if (current !== "reaction") return;
+      state.ready = true; state.start = Date.now();
+      b.disabled = false; b.style.background = "#22c55e"; b.textContent = "CLICK NOW!";
+    }, 1000+rand(3000));
+    b.dataset.action = "reactionhit";
+  }
+  if (a === "reactionhit") {
+    if (!state.ready) { stopTimer(); feedback("Too soon! Restart and try again."); return; }
+    feedback("Your reaction time: " + (Date.now()-state.start) + " ms");
+    state.ready = false;
+  }
+  if (a === "clicker") {
+    if (!state.running) {
+      state.running = true; state.count = 0; state.left = 10;
+      b.textContent = "Click!";
+      timer = setInterval(() => {
+        state.left--;
+        if ($("clock")) $("clock").textContent = state.left + " seconds";
+        if (state.left <= 0) { stopTimer(); state.running = false; feedback("Finished! Score: " + state.count + " clicks."); }
+      },1000);
+    }
+    if (state.running) { state.count++; if ($("count")) $("count").textContent = state.count; }
+  }
+  if (a === "typecheck") $("result").textContent = $("answer").value.trim() === state.word ? "Correct! 🎉" : "Try again.";
+  if (a === "scramblecheck") $("result").textContent = $("answer").value.trim().toLowerCase() === state.word ? "Correct! 🎉" : "Not quite. Try again.";
+  if (a === "color") feedback(idx === state.correct ? "Correct color!" : "Try again!");
+  if (a.startsWith("s") && /^s[0-3]$/.test(a) && current === "simon") {
+    state.entered.push(Number(a[1]));
+    $("entered").textContent = "Your sequence: " + state.entered.map(n=>["🔴","🔵","🟢","🟡"][n]).join(" ");
+    if (state.entered.length === state.sequence.length) feedback(state.entered.every((n,i)=>n===state.sequence[i]) ? "Perfect memory!" : "Sequence incorrect. Restart to try again.");
+  }
+  if ((a === "higher" || a === "lower") && current === "higher") {
+    const next = rand(10)+1;
+    const correct = a==="higher" ? next>state.number : next<state.number;
+    state.score = correct ? state.score+1 : 0;
+    state.number = next;
+    $("number").textContent = next;
+    $("result").textContent = (correct ? "Correct! " : "Not quite. ") + "Score: " + state.score;
+  }
+  if (a === "heads" || a === "tails") {
+    const result = rand(2) ? "heads" : "tails";
+    $("result").textContent = `It landed ${result}. ${a===result?"You guessed correctly!":"Try again!"}`;
+  }
+  if (a === "roll") {
+    const you = rand(6)+1, cpu = rand(6)+1;
+    $("result").textContent = `You rolled ${you}; computer rolled ${cpu}. ${you===cpu?"Draw!":you>cpu?"You win!":"Computer wins!"}`;
+  }
+  if (a === "moleStart") {
+    stopTimer(); state.seconds=15; state.score=0; state.running=true;
+    timer = setInterval(() => {
+      if (current!=="mole") return stopTimer();
+      state.seconds--;
+      if ($("moleclock")) $("moleclock").textContent=state.seconds;
+      state.mole=rand(9);
+      $("gameArea").querySelectorAll('[data-action="mole"]').forEach((x,i)=>x.textContent=i===state.mole?"🐹":"·");
+      if (state.seconds<=0) { stopTimer(); state.running=false; feedback("Time's up! Score: "+state.score); }
+    },1000);
+  }
+  if (a === "mole" && state.running && idx===state.mole) {
+    state.score++; $("molescore").textContent=state.score;
+    state.mole=rand(9);
+    $("gameArea").querySelectorAll('[data-action="mole"]').forEach((x,i)=>x.textContent=i===state.mole?"🐹":"·");
+  }
+  if (a === "trivia") {
+    if (b.dataset.answer === state.q[state.index][1]) state.score++;
+    state.index++; showTrivia();
+    if (state.index===5) feedback("Quiz finished! Score: "+state.score+"/5");
+  }
+  if (a === "odd") feedback(idx===state.odd ? "Correct! You found it." : "That's not the odd one out!");
+  if (a === "sequencecheck") $("result").textContent = Number($("answer").value)===state.answer ? "Correct! 🎉" : "Try again.";
+  if (a === "countcheck") $("result").textContent = Number($("answer").value)===state.count ? "Correct count! 🎉" : "Count again.";
+  if (a === "targetStart") {
+    stopTimer(); state.running=true; state.score=0; state.seconds=10;
+    timer=setInterval(()=>{
+      if (current!=="target") return stopTimer();
+      state.seconds--;
+      if ($("targetClock")) $("targetClock").textContent=state.seconds;
+      if (state.seconds<=0) { stopTimer(); state.running=false; feedback("Time's up! Score: "+state.score); }
+    },1000);
+  }
+  if (a === "targethit" && state.running) {
+    state.score++;
+    $("targetScore").textContent=state.score;
+    const t=$("targetButton"), box=$("targetArea");
+    t.style.left=rand(Math.max(1,box.clientWidth-55))+"px";
+    t.style.top=rand(Math.max(1,box.clientHeight-55))+"px";
+  }
+});
+renderCards();
+</script>
+</body>
+</html>
+```

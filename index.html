@@ -1,0 +1,400 @@
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PlayZone Arcade | Home</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #0b0b17;
+    color: white;
+}
+
+header {
+    background: #121226;
+    padding: 18px 7%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    flex-wrap: wrap;
+    border-bottom: 1px solid #30264a;
+}
+
+.logo {
+    color: #c4b5fd;
+    font-size: 26px;
+    font-weight: bold;
+}
+
+nav {
+    display: flex;
+    gap: 22px;
+    flex-wrap: wrap;
+}
+
+nav a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+}
+
+nav a:hover {
+    color: #c4b5fd;
+}
+
+.hero {
+    min-height: 430px;
+    padding: 55px 7%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 35px;
+    background: linear-gradient(110deg, #21143f, #0b0b17);
+}
+
+.hero-content {
+    flex: 1;
+}
+
+.hero h1 {
+    font-size: clamp(36px, 5vw, 58px);
+    margin-bottom: 18px;
+}
+
+.hero h1 span {
+    color: #c4b5fd;
+}
+
+.hero p {
+    color: #c4c1da;
+    line-height: 1.8;
+    max-width: 500px;
+    margin-bottom: 25px;
+}
+
+.btn {
+    display: inline-block;
+    background: linear-gradient(100deg, #8b5cf6, #ec4899);
+    color: white;
+    padding: 14px 23px;
+    border-radius: 9px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.btn:hover {
+    filter: brightness(1.15);
+}
+
+.hero-image {
+    flex: 1;
+    max-width: 530px;
+}
+
+.hero-image img {
+    width: 100%;
+    height: 310px;
+    object-fit: cover;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px #8b5cf633;
+}
+
+section {
+    padding: 45px 7%;
+}
+
+.section-heading {
+    margin-bottom: 25px;
+}
+
+.section-heading h2 {
+    font-size: 30px;
+    margin-bottom: 10px;
+}
+
+.section-heading p {
+    color: #aaa8c4;
+}
+
+.games {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 22px;
+}
+
+.card {
+    background: #17172b;
+    border: 1px solid #30264a;
+    border-radius: 16px;
+    overflow: hidden;
+    transition: transform .25s, border-color .25s;
+}
+
+.card:hover {
+    transform: translateY(-6px);
+    border-color: #8b5cf6;
+}
+
+.card img {
+    width: 100%;
+    height: 175px;
+    object-fit: cover;
+    display: block;
+}
+
+.card-content {
+    padding: 18px;
+}
+
+.card h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.card p {
+    color: #aaa8c4;
+    line-height: 1.6;
+    font-size: 14px;
+    min-height: 44px;
+    margin-bottom: 15px;
+}
+
+.card a {
+    color: #c4b5fd;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.card a:hover {
+    color: #f0abfc;
+}
+
+.banner {
+    margin: 10px 7% 45px;
+    padding: 35px;
+    border-radius: 18px;
+    background: linear-gradient(110deg, #402075, #8b3d84);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 25px;
+    flex-wrap: wrap;
+}
+
+.banner h2 {
+    margin-bottom: 10px;
+}
+
+.banner p {
+    color: #eee5ff;
+    line-height: 1.6;
+}
+
+.banner .btn {
+    background: white;
+    color: #51248a;
+}
+
+.about {
+    background: #111122;
+    text-align: center;
+}
+
+.about p {
+    color: #aaa8c4;
+    max-width: 650px;
+    margin: 15px auto 0;
+    line-height: 1.8;
+}
+
+footer {
+    text-align: center;
+    padding: 25px;
+    color: #aaa8c4;
+    border-top: 1px solid #30264a;
+}
+
+@media (max-width: 700px) {
+    header {
+        padding: 17px 5%;
+    }
+
+    nav {
+        gap: 14px;
+    }
+
+    .hero {
+        padding: 40px 5%;
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .hero-image {
+        max-width: 100%;
+    }
+
+    .hero-image img {
+        height: 230px;
+    }
+
+    section {
+        padding: 35px 5%;
+    }
+
+    .games {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+    }
+
+    .card img {
+        height: 130px;
+    }
+
+    .card-content {
+        padding: 12px;
+    }
+
+    .card h3 {
+        font-size: 16px;
+    }
+
+    .card p {
+        font-size: 12px;
+    }
+
+    .banner {
+        margin: 0 5% 35px;
+        padding: 25px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <a class="logo" href="index.html">🎮 PlayZone</a>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="games.html">Games</a>
+        <a href="kop.html">Apps</a>
+    </nav>
+</header>
+
+<section class="hero">
+    <div class="hero-content">
+        <h1>Level Up Your <span>Gaming</span></h1>
+
+        <p>
+            Welcome to PlayZone Arcade! Discover fun mini-games,
+            challenge your brain, beat your high scores, and enjoy
+            gaming right in your browser.
+        </p>
+
+        <a class="btn" href="games.html">🎮 Explore All Games</a>
+    </div>
+
+    <div class="hero-image">
+        <img
+            src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1000&q=85"
+            alt="Gaming setup with colorful lights"
+            fetchpriority="high">
+    </div>
+</section>
+
+<section>
+    <div class="section-heading">
+        <h2>🔥 Featured Games</h2>
+        <p>Choose a game and start playing!</p>
+    </div>
+
+    <div class="games">
+
+        <article class="card">
+            <img
+                src="https://images.unsplash.com/photo-1614294149010-950b698f72c0?auto=format&fit=crop&w=700&q=80"
+                alt="Colorful video game scene"
+                loading="lazy">
+            <div class="card-content">
+                <h3>🎮 Arcade Games</h3>
+                <p>Discover quick and fun games to play whenever you want.</p>
+                <a href="games.html">Play games →</a>
+            </div>
+        </article>
+
+        <article class="card">
+            <img
+                src="https://images.unsplash.com/photo-1612287230202-1ff1d85d1bdf?auto=format&fit=crop&w=700&q=80"
+                alt="Gaming controller"
+                loading="lazy">
+            <div class="card-content">
+                <h3>🕹️ Action Games</h3>
+                <p>Test your reactions with exciting mini-game challenges.</p>
+                <a href="games.html">Play games →</a>
+            </div>
+        </article>
+
+        <article class="card">
+            <img
+                src="https://images.unsplash.com/photo-1603481546238-487240415921?auto=format&fit=crop&w=700&q=80"
+                alt="Gaming equipment"
+                loading="lazy">
+            <div class="card-content">
+                <h3>🧠 Brain Games</h3>
+                <p>Challenge yourself with puzzles, memory, and logic games.</p>
+                <a href="games.html">Play games →</a>
+            </div>
+        </article>
+
+        <article class="card">
+            <img
+                src="https://images.unsplash.com/photo-1593305841991-05c297ba4575?auto=format&fit=crop&w=700&q=80"
+                alt="Gaming monitor and computer"
+                loading="lazy">
+            <div class="card-content">
+                <h3>🏆 Challenge Zone</h3>
+                <p>Improve your scores and see how far you can go.</p>
+                <a href="games.html">Start a challenge →</a>
+            </div>
+        </article>
+
+    </div>
+</section>
+
+<div class="banner">
+    <div>
+        <h2>🚀 Ready for your next challenge?</h2>
+        <p>Explore all 20 mini-games in the PlayZone Games section.</p>
+    </div>
+
+    <a class="btn" href="games.html">Browse Games →</a>
+</div>
+
+<section class="about">
+    <h2>About PlayZone Arcade</h2>
+    <p>
+        PlayZone is a browser gaming project created to bring
+        fun mini-games and useful web experiences together.
+        No game downloads are needed for the built-in mini-games.
+    </p>
+</section>
+
+<footer>
+    <p>© 2026 PlayZone Arcade | Made with ❤️ and code</p>
+</footer>
+
+</body>
+</html>
+```
