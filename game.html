@@ -1,0 +1,130 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PixelPort | Games</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <header class="navbar">
+    <a class="logo" href="index.html">PIXEL<span>PORT</span></a>
+    <nav>
+      <a href="index.html">Home</a>
+      <a class="active" href="game.html">Games</a>
+      <a href="app.html">Apps</a>
+    </nav>
+  </header>
+
+  <main class="page">
+    <section class="page-heading">
+      <p class="tag">READY PLAYER ONE?</p>
+      <h1>Game <span>Zone</span></h1>
+      <p>Choose a game and start playing in your browser.</p>
+      <input id="gameSearch" class="search" placeholder="Search games...">
+    </section>
+
+    <section class="cards game-cards" id="gameCards">
+      <article class="card game-card" data-search="tic tac toe">
+        <div class="card-icon">❎</div><h3>Tic-Tac-Toe</h3>
+        <p>Challenge a friend or play against the computer.</p>
+        <button class="btn primary" onclick="openGame('tic')">Play Now</button>
+      </article>
+      <article class="card game-card" data-search="snake">
+        <div class="card-icon">🐍</div><h3>Snake</h3>
+        <p>Eat food, grow longer, and avoid crashing.</p>
+        <button class="btn primary" onclick="openGame('snake')">Play Now</button>
+      </article>
+      <article class="card game-card" data-search="rock paper scissors">
+        <div class="card-icon">✊</div><h3>Rock Paper Scissors</h3>
+        <p>Can you beat the computer?</p>
+        <button class="btn primary" onclick="openGame('rps')">Play Now</button>
+      </article>
+      <article class="card game-card" data-search="number guess">
+        <div class="card-icon">🔢</div><h3>Number Guess</h3>
+        <p>Find the secret number between 1 and 100.</p>
+        <button class="btn primary" onclick="openGame('guess')">Play Now</button>
+      </article>
+      <article class="card game-card" data-search="memory match">
+        <div class="card-icon">🧠</div><h3>Memory Match</h3>
+        <p>Match the pairs by remembering the cards.</p>
+        <button class="btn primary" onclick="openGame('memory')">Play Now</button>
+      </article>
+      <article class="card game-card" data-search="click speed">
+        <div class="card-icon">🖱️</div><h3>Click Challenge</h3>
+        <p>Test how quickly you can click.</p>
+        <button class="btn primary" onclick="openGame('click')">Play Now</button>
+      </article>
+      <article class="card game-card" data-search="math sprint">
+        <div class="card-icon">➕</div><h3>Math Sprint</h3>
+        <p>Solve quick maths questions.</p>
+        <button class="btn primary" onclick="openGame('math')">Play Now</button>
+      </article>
+      <article class="card game-card" data-search="coin flip">
+        <div class="card-icon">🪙</div><h3>Coin Flip</h3>
+        <p>Pick heads or tails.</p>
+        <button class="btn primary" onclick="openGame('coin')">Play Now</button>
+      </article>
+    </section>
+
+    <section class="section">
+      <p class="tag">MORE GAMES</p>
+      <h2>Popular gaming worlds</h2>
+      <div class="cards">
+        <article class="card">
+          <div class="card-icon">⛏️</div><h3>Minecraft</h3>
+          <p>Explore the official game website.</p>
+          <a href="https://www.minecraft.net/" target="_blank" rel="noopener">Official website ↗</a>
+        </article>
+        <article class="card">
+          <div class="card-icon">🔫</div><h3>BGMI</h3>
+          <p>Visit the official BGMI website.</p>
+          <a href="https://www.battlegroundsmobileindia.com/" target="_blank" rel="noopener">Official website ↗</a>
+        </article>
+        <article class="card">
+          <div class="card-icon">🔥</div><h3>Free Fire</h3>
+          <p>Visit the official Free Fire website.</p>
+          <a href="https://ff.garena.com/" target="_blank" rel="noopener">Official website ↗</a>
+        </article>
+        <article class="card">
+          <div class="card-icon">🎯</div><h3>Call of Duty</h3>
+          <p>Explore the official Call of Duty website.</p>
+          <a href="https://www.callofduty.com/" target="_blank" rel="noopener">Official website ↗</a>
+        </article>
+        <article class="card">
+          <div class="card-icon">🧱</div><h3>Roblox</h3>
+          <p>Explore games and experiences.</p>
+          <a href="https://www.roblox.com/" target="_blank" rel="noopener">Official website ↗</a>
+        </article>
+        <article class="card">
+          <div class="card-icon">🏰</div><h3>Clash of Clans</h3>
+          <p>Visit the official Supercell game page.</p>
+          <a href="https://supercell.com/en/games/clashofclans/" target="_blank" rel="noopener">Official website ↗</a>
+        </article>
+        <article class="card">
+          <div class="card-icon">⚔️</div><h3>Mobile Legends</h3>
+          <p>Explore the official game website.</p>
+          <a href="https://www.mobilelegends.com/" target="_blank" rel="noopener">Official website ↗</a>
+        </article>
+        <article class="card">
+          <div class="card-icon">🎮</div><h3>Rivals</h3>
+          <p>Find the game through its official platform.</p>
+          <a href="https://www.roblox.com/" target="_blank" rel="noopener">Find on Roblox ↗</a>
+        </article>
+      </div>
+    </section>
+
+    <section class="play-panel" id="gamePanel" hidden>
+      <div class="panel-top">
+        <h2 id="gameTitle">Game</h2>
+        <button class="btn secondary" onclick="closeGame()">Close ✕</button>
+      </div>
+      <div id="gameArea"></div>
+    </section>
+  </main>
+
+  <footer><p>© 2026 PixelPort · Play fair, have fun</p></footer>
+</body>
+</html>

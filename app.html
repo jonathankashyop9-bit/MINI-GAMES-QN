@@ -1,0 +1,93 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PixelPort | Apps</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <header class="navbar">
+    <a class="logo" href="index.html">PIXEL<span>PORT</span></a>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="game.html">Games</a>
+      <a class="active" href="app.html">Apps</a>
+    </nav>
+  </header>
+
+  <main class="page">
+    <section class="page-heading">
+      <p class="tag">TOOLS FOR EVERY DAY</p>
+      <h1>Mini <span>Apps</span></h1>
+      <p>Simple tools that run on this page.</p>
+      <input id="appSearch" class="search" placeholder="Search apps...">
+    </section>
+
+    <section class="cards" id="appCards">
+      <article class="card app-card" data-search="calculator">
+        <div class="card-icon">🧮</div><h3>Calculator</h3>
+        <p>Calculate basic maths.</p>
+        <button class="btn primary" onclick="openApp('calculator')">Open App</button>
+      </article>
+      <article class="card app-card" data-search="stopwatch">
+        <div class="card-icon">⏱️</div><h3>Stopwatch</h3>
+        <p>Measure elapsed time.</p>
+        <button class="btn primary" onclick="openApp('stopwatch')">Open App</button>
+      </article>
+      <article class="card app-card" data-search="countdown timer">
+        <div class="card-icon">⌛</div><h3>Countdown Timer</h3>
+        <p>Set a timer in seconds.</p>
+        <button class="btn primary" onclick="openApp('timer')">Open App</button>
+      </article>
+      <article class="card app-card" data-search="todo list tasks">
+        <div class="card-icon">✅</div><h3>To-do List</h3>
+        <p>Organize your tasks.</p>
+        <button class="btn primary" onclick="openApp('todo')">Open App</button>
+      </article>
+      <article class="card app-card" data-search="notes notepad">
+        <div class="card-icon">📝</div><h3>Notes</h3>
+        <p>Write notes in your browser.</p>
+        <button class="btn primary" onclick="openApp('notes')">Open App</button>
+      </article>
+      <article class="card app-card" data-search="unit converter">
+        <div class="card-icon">📏</div><h3>Unit Converter</h3>
+        <p>Convert kilometres and miles.</p>
+        <button class="btn primary" onclick="openApp('convert')">Open App</button>
+      </article>
+      <article class="card app-card" data-search="password generator">
+        <div class="card-icon">🔐</div><h3>Password Generator</h3>
+        <p>Generate a random password.</p>
+        <button class="btn primary" onclick="openApp('password')">Open App</button>
+      </article>
+      <article class="card app-card" data-search="word counter">
+        <div class="card-icon">🔤</div><h3>Word Counter</h3>
+        <p>Count words and characters.</p>
+        <button class="btn primary" onclick="openApp('words')">Open App</button>
+      </article>
+      <article class="card app-card" data-search="age calculator">
+        <div class="card-icon">🎂</div><h3>Age Calculator</h3>
+        <p>Calculate your age in years.</p>
+        <button class="btn primary" onclick="openApp('age')">Open App</button>
+      </article>
+      <article class="card app-card" data-search="percentage calculator marks">
+        <div class="card-icon">💯</div><h3>Percentage Calculator</h3>
+        <p>Calculate marks percentages.</p>
+        <button class="btn primary" onclick="openApp('percent')">Open App</button>
+      </article>
+    </section>
+
+    <section class="play-panel" id="appPanel" hidden>
+      <div class="panel-top">
+        <h2 id="appTitle">App</h2>
+        <button class="btn secondary" onclick="closeApp()">Close ✕</button>
+      </div>
+      <div id="appArea"></div>
+    </section>
+  </main>
+
+  <footer><p>© 2026 PixelPort · Useful tools in one place</p></footer>
+</body>
+</html>
