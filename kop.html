@@ -1,0 +1,710 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PlayZone | Apps Hub</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --bg: #080121;
+    --panel: #170d35;
+    --purple: #a855f7;
+    --text: #ffffff;
+    --muted: #c9c1dc;
+}
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+}
+
+/* NAVIGATION */
+nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 16px 6%;
+    background: #11072b;
+    border-bottom: 1px solid #35205c;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #d3a2ff;
+}
+
+.nav-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+}
+
+nav a:hover,
+nav a.active {
+    color: #d3a2ff;
+}
+
+/* HERO */
+.hero {
+    text-align: center;
+    padding: 55px 20px 40px;
+    background: radial-gradient(ellipse at top, #35105e, var(--bg) 75%);
+}
+
+.hero .emoji {
+    font-size: 55px;
+}
+
+.hero h1 {
+    font-size: clamp(32px, 5vw, 48px);
+    color: #d3a2ff;
+    margin: 10px 0;
+}
+
+.hero p {
+    color: var(--muted);
+    max-width: 650px;
+    margin: auto;
+}
+
+/* SEARCH */
+.search-area {
+    max-width: 650px;
+    margin: 28px auto 0;
+    padding: 0 15px;
+}
+
+#searchInput {
+    width: 100%;
+    padding: 15px 18px;
+    border: 1px solid #56317e;
+    border-radius: 12px;
+    outline: none;
+    background: #170d35;
+    color: white;
+    font-size: 16px;
+}
+
+#searchInput:focus {
+    border-color: #c084fc;
+    box-shadow: 0 0 15px #a855f744;
+}
+
+#searchStatus {
+    margin-top: 8px;
+    color: var(--muted);
+    font-size: 13px;
+}
+
+/* APP CARDS */
+.section {
+    padding: 35px 7% 50px;
+}
+
+.section h2 {
+    font-size: 27px;
+    margin-bottom: 5px;
+}
+
+.intro {
+    color: var(--muted);
+    margin-bottom: 24px;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 23px;
+}
+
+.card {
+    background: var(--panel);
+    border: 1px solid #35205c;
+    border-radius: 15px;
+    overflow: hidden;
+    transition: 0.25s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    border-color: #b56aff;
+    box-shadow: 0 8px 25px #851cff30;
+}
+
+.card img {
+    width: 100%;
+    height: 175px;
+    object-fit: cover;
+    display: block;
+    background: #241342;
+}
+
+.card-content {
+    padding: 18px;
+}
+
+.tag {
+    display: inline-block;
+    background: #321454;
+    color: #dfbfff;
+    border-radius: 20px;
+    padding: 3px 10px;
+    font-size: 11px;
+    margin-bottom: 9px;
+}
+
+.card h3 {
+    margin-bottom: 7px;
+}
+
+.card p {
+    color: var(--muted);
+    font-size: 14px;
+    margin-bottom: 16px;
+}
+
+.btn {
+    display: inline-block;
+    background: #851cff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 16px;
+    font-size: 14px;
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn:hover {
+    background: #a64cff;
+    box-shadow: 0 0 15px #a855f755;
+}
+
+.tool-box {
+    margin-top: 15px;
+    padding: 12px;
+    background: #0e0623;
+    border-radius: 10px;
+}
+
+.tool-box input,
+.tool-box select {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0 10px;
+    background: #21123e;
+    color: white;
+    border: 1px solid #56317e;
+    border-radius: 7px;
+}
+
+.tool-box button {
+    margin: 4px 3px 4px 0;
+}
+
+.result {
+    color: #d3a2ff;
+    margin-top: 8px;
+    overflow-wrap: anywhere;
+}
+
+.todo-list {
+    list-style: none;
+    margin-top: 10px;
+}
+
+.todo-list li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 0;
+    overflow-wrap: anywhere;
+}
+
+.todo-list li span {
+    flex: 1;
+}
+
+.todo-list input[type="checkbox"] {
+    width: auto;
+    margin: 0;
+}
+
+.done {
+    text-decoration: line-through;
+    opacity: 0.6;
+}
+
+.empty {
+    display: none;
+    text-align: center;
+    color: var(--muted);
+    padding: 25px;
+}
+
+.about {
+    margin: 0 7% 40px;
+    padding: 25px;
+    background: #11072b;
+    border: 1px solid #35205c;
+    border-radius: 14px;
+}
+
+.about h2 {
+    color: #d3a2ff;
+    margin-bottom: 8px;
+}
+
+.about p {
+    color: var(--muted);
+}
+
+footer {
+    text-align: center;
+    padding: 24px 12px;
+    background: #11072b;
+    border-top: 1px solid #35205c;
+    color: #b7abc9;
+}
+
+footer strong {
+    color: #d3a2ff;
+}
+
+@media (max-width: 600px) {
+    nav {
+        flex-direction: column;
+    }
+
+    .nav-links {
+        justify-content: center;
+        gap: 18px;
+    }
+
+    .section {
+        padding: 28px 5% 40px;
+    }
+
+    .cards {
+        grid-template-columns: 1fr;
+    }
+
+    .hero {
+        padding-top: 38px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVIGATION -->
+<nav>
+    <div class="logo">🎮 PlayZone</div>
+
+    <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="kopie.html">Games</a>
+        <a href="kop.html" class="active">Apps</a>
+    </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+    <div class="emoji">⚡</div>
+    <h1>Mini Apps Hub</h1>
+    <p>
+        Useful tools for your everyday life, all in one place.
+        Search, explore, and get things done!
+    </p>
+
+    <div class="search-area">
+        <input
+            type="search"
+            id="searchInput"
+            placeholder="🔍 Search apps and tools..."
+            aria-label="Search apps">
+
+        <p id="searchStatus" aria-live="polite">
+            Explore all 5 apps and tools below.
+        </p>
+    </div>
+</header>
+
+<main>
+<section class="section">
+    <h2>🚀 Explore Apps</h2>
+    <p class="intro">
+        Click an external link or use a built-in tool directly here.
+    </p>
+
+    <div class="cards" id="appCards">
+
+        <!-- BUILT-IN TO-DO LIST -->
+        <article class="card" data-search="todo to-do list tasks planner productivity">
+            <img
+                src="https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?auto=format&fit=crop&w=700&q=80"
+                alt="Notebook and planning materials"
+                loading="lazy">
+
+            <div class="card-content">
+                <span class="tag">PRODUCTIVITY</span>
+                <h3>✅ My To-Do List</h3>
+                <p>Add tasks and mark them complete without leaving PlayZone.</p>
+
+                <div class="tool-box">
+                    <label for="taskInput">New task</label>
+                    <input id="taskInput" type="text"
+                           placeholder="Enter a task...">
+
+                    <button class="btn" id="addTask">Add Task +</button>
+                    <ul class="todo-list" id="taskList"></ul>
+                    <p class="result" id="taskStatus" aria-live="polite"></p>
+                </div>
+            </div>
+        </article>
+
+        <!-- BUILT-IN STUDY TIMER -->
+        <article class="card" data-search="study timer focus pomodoro countdown learning">
+            <img
+                src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=700&q=80"
+                alt="Study notes and stationery"
+                loading="lazy">
+
+            <div class="card-content">
+                <span class="tag">STUDY TOOL</span>
+                <h3>⏱️ Study Timer</h3>
+                <p>Set a focus session and keep track of your study time.</p>
+
+                <div class="tool-box">
+                    <label for="minutesInput">Minutes</label>
+                    <input id="minutesInput" type="number"
+                           min="1" max="180" value="25">
+
+                    <h2 id="timerDisplay" class="result">25:00</h2>
+
+                    <button class="btn" id="startTimer">Start</button>
+                    <button class="btn" id="pauseTimer">Pause</button>
+                    <button class="btn" id="resetTimer">Reset</button>
+
+                    <p id="timerStatus" aria-live="polite">
+                        Ready to focus?
+                    </p>
+                </div>
+            </div>
+        </article>
+
+        <!-- BUILT-IN GOAL TRACKER -->
+        <article class="card" data-search="daily goals habit tracker personal improvement">
+            <img
+                src="https://images.unsplash.com/photo-1506784983877-45594efa4cbe?auto=format&fit=crop&w=700&q=80"
+                alt="Planning a daily schedule"
+                loading="lazy">
+
+            <div class="card-content">
+                <span class="tag">DAILY PLANNER</span>
+                <h3>🎯 Daily Goal Tracker</h3>
+                <p>Choose a goal and track your progress for today.</p>
+
+                <div class="tool-box">
+                    <label for="goalInput">Your goal</label>
+                    <input id="goalInput" type="text"
+                           placeholder="Example: Read a book">
+
+                    <button class="btn" id="saveGoal">Save Goal</button>
+
+                    <p id="savedGoal" class="result">
+                        No goal set yet.
+                    </p>
+
+                    <label for="progressInput">Progress</label>
+                    <select id="progressInput">
+                        <option value="0">Not started</option>
+                        <option value="25">25% complete</option>
+                        <option value="50">50% complete</option>
+                        <option value="75">75% complete</option>
+                        <option value="100">100% complete</option>
+                    </select>
+
+                    <p id="progressText" class="result">Progress: 0%</p>
+                    <progress id="progressBar" value="0" max="100"
+                              style="width:100%"></progress>
+                </div>
+            </div>
+        </article>
+
+        <!-- BMI EXTERNAL TOOL -->
+        <article class="card" data-search="bmi calculator health body mass index">
+            <a href="https://www.calculator.net/bmi-calculator.html"
+               target="_blank" rel="noopener noreferrer">
+                <img
+                    src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=700&q=80"
+                    alt="Fitness equipment"
+                    loading="lazy">
+            </a>
+
+            <div class="card-content">
+                <span class="tag">EXTERNAL TOOL</span>
+                <h3>📊 BMI Calculator</h3>
+                <p>
+                    Open an external calculator to learn about
+                    body mass index. BMI is only a rough screening
+                    measure and isn't a diagnosis.
+                </p>
+
+                <a class="btn"
+                   href="https://www.calculator.net/bmi-calculator.html"
+                   target="_blank" rel="noopener noreferrer">
+                    Open Calculator ↗
+                </a>
+            </div>
+        </article>
+
+        <!-- WORKOUT EXTERNAL TOOL -->
+        <article class="card" data-search="workout exercise fitness routines training">
+            <a href="https://www.muscleandstrength.com/workout-routines"
+               target="_blank" rel="noopener noreferrer">
+                <img
+                    src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=700&q=80"
+                    alt="Gym equipment"
+                    loading="lazy">
+            </a>
+
+            <div class="card-content">
+                <span class="tag">EXTERNAL TOOL</span>
+                <h3>💪 Workout Routines</h3>
+                <p>
+                    Explore exercise information and workout
+                    ideas on an external website.
+                </p>
+
+                <a class="btn"
+                   href="https://www.muscleandstrength.com/workout-routines"
+                   target="_blank" rel="noopener noreferrer">
+                    Explore Routines ↗
+                </a>
+            </div>
+        </article>
+
+    </div>
+
+    <p class="empty" id="noResults">
+        No apps found. Try a different search.
+    </p>
+</section>
+
+<section class="about">
+    <h2>About PlayZone Apps</h2>
+    <p>
+        PlayZone brings useful tools and entertainment together.
+        Our built-in tools run in your browser, while external
+        tools open their own websites. Online images require
+        an internet connection.
+    </p>
+</section>
+</main>
+
+<footer>
+    <p>Made with ❤️ by <strong>Jonathan</strong></p>
+    <p>© 2026 PlayZone Arcade</p>
+</footer>
+
+<script>
+/* APP SEARCH */
+const searchInput = document.getElementById("searchInput");
+const cards = document.querySelectorAll(".card");
+const noResults = document.getElementById("noResults");
+const searchStatus = document.getElementById("searchStatus");
+
+searchInput.addEventListener("input", function () {
+    const query = this.value.toLowerCase().trim();
+    let visible = 0;
+
+    cards.forEach(function (card) {
+        const searchableText =
+            (card.innerText + " " + card.dataset.search).toLowerCase();
+
+        const matches = searchableText.includes(query);
+        card.style.display = matches ? "" : "none";
+
+        if (matches) visible++;
+    });
+
+    noResults.style.display = visible === 0 ? "block" : "none";
+    searchStatus.textContent =
+        visible + (visible === 1 ? " app found." : " apps found.");
+});
+
+/* TO-DO LIST */
+const taskInput = document.getElementById("taskInput");
+const taskList = document.getElementById("taskList");
+const taskStatus = document.getElementById("taskStatus");
+
+function addTask() {
+    const text = taskInput.value.trim();
+
+    if (!text) {
+        taskStatus.textContent = "Please enter a task first.";
+        taskInput.focus();
+        return;
+    }
+
+    const item = document.createElement("li");
+    const checkbox = document.createElement("input");
+    const label = document.createElement("span");
+    const remove = document.createElement("button");
+
+    checkbox.type = "checkbox";
+    label.textContent = text;
+    remove.type = "button";
+    remove.textContent = "✕";
+    remove.setAttribute("aria-label", "Delete task");
+    remove.style.cssText =
+        "background:#43205e;color:white;border:0;padding:5px 9px;border-radius:5px;cursor:pointer";
+
+    checkbox.addEventListener("change", function () {
+        label.classList.toggle("done", checkbox.checked);
+    });
+
+    remove.addEventListener("click", function () {
+        item.remove();
+        taskStatus.textContent = "Task deleted.";
+    });
+
+    item.append(checkbox, label, remove);
+    taskList.appendChild(item);
+
+    taskInput.value = "";
+    taskStatus.textContent = "Task added!";
+    taskInput.focus();
+}
+
+document.getElementById("addTask").addEventListener("click", addTask);
+
+taskInput.addEventListener("keydown", function (event) {
+    if (event.key === "Enter") addTask();
+});
+
+/* STUDY TIMER */
+const minutesInput = document.getElementById("minutesInput");
+const timerDisplay = document.getElementById("timerDisplay");
+const timerStatus = document.getElementById("timerStatus");
+
+let remainingSeconds = 25 * 60;
+let timerInterval = null;
+
+function showTime() {
+    const minutes = Math.floor(remainingSeconds / 60);
+    const seconds = remainingSeconds % 60;
+
+    timerDisplay.textContent =
+        String(minutes).padStart(2, "0") + ":" +
+        String(seconds).padStart(2, "0");
+}
+
+function stopTimer() {
+    clearInterval(timerInterval);
+    timerInterval = null;
+}
+
+document.getElementById("startTimer").addEventListener("click", function () {
+    if (timerInterval !== null) return;
+
+    if (remainingSeconds <= 0) {
+        timerStatus.textContent = "Press Reset to start another session.";
+        return;
+    }
+
+    timerStatus.textContent = "Focus session running!";
+
+    timerInterval = setInterval(function () {
+        remainingSeconds--;
+        showTime();
+
+        if (remainingSeconds <= 0) {
+            stopTimer();
+            timerStatus.textContent = "Session complete! Take a break.";
+        }
+    }, 1000);
+});
+
+document.getElementById("pauseTimer").addEventListener("click", function () {
+    stopTimer();
+    timerStatus.textContent = "Timer paused.";
+});
+
+document.getElementById("resetTimer").addEventListener("click", function () {
+    stopTimer();
+
+    const minutes = Number(minutesInput.value);
+
+    if (!Number.isInteger(minutes) || minutes < 1 || minutes > 180) {
+        timerStatus.textContent = "Enter a whole number from 1 to 180.";
+        return;
+    }
+
+    remainingSeconds = minutes * 60;
+    showTime();
+    timerStatus.textContent = "Timer reset. Ready when you are!";
+});
+
+minutesInput.addEventListener("change", function () {
+    if (timerInterval === null) {
+        const minutes = Number(minutesInput.value);
+
+        if (Number.isInteger(minutes) && minutes >= 1 && minutes <= 180) {
+            remainingSeconds = minutes * 60;
+            showTime();
+        }
+    }
+});
+
+/* DAILY GOAL TRACKER */
+const goalInput = document.getElementById("goalInput");
+const savedGoal = document.getElementById("savedGoal");
+const progressInput = document.getElementById("progressInput");
+const progressText = document.getElementById("progressText");
+const progressBar = document.getElementById("progressBar");
+
+document.getElementById("saveGoal").addEventListener("click", function () {
+    const goal = goalInput.value.trim();
+
+    if (!goal) {
+        savedGoal.textContent = "Please enter a goal first.";
+        goalInput.focus();
+        return;
+    }
+
+    savedGoal.textContent = "Today's goal: " + goal;
+});
+
+progressInput.addEventListener("change", function () {
+    const progress = Number(progressInput.value);
+
+    progressBar.value = progress;
+    progressText.textContent = "Progress: " + progress + "%";
+});
+</script>
+
+</body>
+</html>
+```
